@@ -16,7 +16,7 @@ import { ThemeContext } from "ThemeContext/ThemeContext";
 import { Link } from "react-router-dom";
 // import { CommentContext } from "ThemeContext/CommentContext";
 
-function IndexNavbar({ setCommentData }) {
+function IndexNavbar() {
   // context
   const { Themes, ToggleTheme, isLightTheme } = useContext(ThemeContext);
   // const { setCommentData } = useContext(CommentContext);

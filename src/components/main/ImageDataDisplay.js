@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { ThemeContext } from "ThemeContext/ThemeContext";
-import { Button, Col, Container, Row } from "reactstrap";
-import { Bar, HorizontalBar } from "react-chartjs-2";
+import { Col, Container, Row } from "reactstrap";
+import { HorizontalBar } from "react-chartjs-2";
 
 function ImageDataDisplay({ BACKEND_DOMAIN, ratingsArray, imageData }) {
   const { Themes } = useContext(ThemeContext);
@@ -18,15 +18,15 @@ function ImageDataDisplay({ BACKEND_DOMAIN, ratingsArray, imageData }) {
         hoverBackgroundColor: "rgba(255,99,132,0.4)",
         hoverBorderColor: "rgba(255,99,132,1)",
         data: [
-          (ratingsArray.filter((x) => x == 5).length * 100) /
+          (ratingsArray.filter((x) => x === 5).length * 100) /
             ratingsArray.length,
-          (ratingsArray.filter((x) => x == 4).length * 100) /
+          (ratingsArray.filter((x) => x === 4).length * 100) /
             ratingsArray.length,
-          (ratingsArray.filter((x) => x == 3).length * 100) /
+          (ratingsArray.filter((x) => x === 3).length * 100) /
             ratingsArray.length,
-          (ratingsArray.filter((x) => x == 2).length * 100) /
+          (ratingsArray.filter((x) => x === 2).length * 100) /
             ratingsArray.length,
-          (ratingsArray.filter((x) => x == 1).length * 100) /
+          (ratingsArray.filter((x) => x === 1).length * 100) /
             ratingsArray.length,
         ],
       },

@@ -1,10 +1,11 @@
 import HomeSearchHeader from "components/Headers/HomeSearchHeader";
 import MyNavBar from "components/Navbars/MyNavBar";
-import React, { useContext, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 // import { ThemeContext } from "ThemeContext/ThemeContext";
 import CommentDisplayPage from "components/main/CommentDisplayPage";
 import ImageDataDisplay from "components/main/ImageDataDisplay";
+import MyLodingAnimation from "components/main/MyLodingAnimation";
 
 function HomePage(props) {
   document.documentElement.classList.remove("nav-open");
@@ -18,6 +19,7 @@ function HomePage(props) {
   // const { Themes, ToggleTheme, isLightTheme } = useContext(ThemeContext);
   const [commentData, setCommentData] = useState([]);
   const [imageData, setImageData] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [ratingsArray, setRatingsArray] = useState([]);
   const [inputText, setInputText] = useState("");
   const [IsLoading, setIsLoading] = useState(false);
@@ -34,16 +36,37 @@ function HomePage(props) {
   function handleOnChange(event) {
     event.preventDefault();
     setInputText(event.target.value);
-    // console.log(event.target.value);
+    console.log(event.target.value);
   }
   let array = [];
 
   function handleOnSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
+    if (errorMsg !== "") {
+      setErrorMsg("");
+    }
 
     axios
-      .get(`${BACKEND_DOMAIN}test/`)
+      .post(`${BACKEND_DOMAIN}review/product`, { product_url: inputText })
+      .then((res) => {
+        console.log(res);
+        setTimeout(function () {
+          check();
+        }, 60000);
+      })
+      .catch(function (err) {
+        setIsLoading(false);
+        setErrorMsg("There was an error!");
+      });
+    // setTimeout(function () {
+    //   check();
+    // }, 60000)
+  }
+
+  function check() {
+    axios
+      .get(`${BACKEND_DOMAIN}review/legit/final`)
       .then(function (res) {
         setImageData(res.data.image_id);
         setRatingsArray(res.data.ratings);
@@ -63,17 +86,21 @@ function HomePage(props) {
         // console.log(array);
         setIsLoading(false);
         commentScroll();
+      })
+      .catch(function (err) {
+        setIsLoading(false);
+        setErrorMsg("There was an error!");
       });
   }
-
   return (
     <>
-      <MyNavBar setCommentData={setCommentData} />
-
+      <MyNavBar IsLoading={IsLoading} setCommentData={setCommentData} />
+      {IsLoading ? <MyLodingAnimation /> : ""}
       <HomeSearchHeader
         inputText={inputText}
         handleOnChange={handleOnChange}
         handleOnSubmit={handleOnSubmit}
+        errorMsg={errorMsg}
       />
       {commentData.length !== 0 ? (
         <div className="main" ref={myRef}>

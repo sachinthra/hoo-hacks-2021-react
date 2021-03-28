@@ -1,25 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Col, Container, Row } from "reactstrap";
 import { ThemeContext } from "ThemeContext/ThemeContext";
-import ReactPaginate from "react-paginate";
 
 function CommentDisplayPage({ commentData }) {
   console.log("commentData");
   console.log(commentData);
-  const { Themes, ToggleTheme, isLightTheme } = useContext(ThemeContext);
+  const { Themes } = useContext(ThemeContext);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [pagination, setPagination] = useState({
-    offset: 0,
-    numberPerPage: 10,
-    pageCount: 0,
-    currentData: [],
-  });
-  const handlePageClick = (event) => {
-    const selected = event.selected;
-    const offset = selected * pagination.numberPerPage;
-    setPagination({ ...pagination, offset });
-  };
+
   return (
     <div
       className="section section-buttons"
@@ -38,7 +27,7 @@ function CommentDisplayPage({ commentData }) {
               onClick={() => {
                 setCurrentPage((prev) => prev - 1);
               }}
-              disabled={currentPage == 0}
+              disabled={currentPage === 0}
               style={{
                 color: Themes.UiTextTheme,
                 backgroundColor: Themes.UiButtonTheme,
@@ -49,14 +38,14 @@ function CommentDisplayPage({ commentData }) {
           </Col>
           <Col sm="2">
             <h3 style={{ margin: "0px" }}>
-              {currentPage + 1}/{commentData.length / 10}
+              {currentPage + 1}/{Math.ceil(commentData.length / 10)}
             </h3>
           </Col>
           <Col sm="3">
             <Button
               color="light"
               type="button"
-              disabled={currentPage == commentData.length / 10 - 1}
+              disabled={currentPage === Math.ceil(commentData.length / 10) - 1}
               onClick={() => {
                 setCurrentPage((prev) => prev + 1);
               }}
@@ -109,7 +98,7 @@ function CommentDisplayPage({ commentData }) {
               onClick={() => {
                 setCurrentPage((prev) => prev - 1);
               }}
-              disabled={currentPage == 0}
+              disabled={currentPage === 0}
               style={{
                 color: Themes.UiTextTheme,
                 backgroundColor: Themes.UiButtonTheme,
@@ -120,14 +109,14 @@ function CommentDisplayPage({ commentData }) {
           </Col>
           <Col sm="2">
             <h3 style={{ margin: "0px" }}>
-              {currentPage + 1}/{commentData.length / 10}
+              {currentPage + 1}/{Math.ceil(commentData.length / 10)}
             </h3>
           </Col>
           <Col sm="3">
             <Button
               color="light"
               type="button"
-              disabled={currentPage == commentData.length / 10 - 1}
+              disabled={currentPage === Math.ceil(commentData.length / 10) - 1}
               onClick={() => {
                 setCurrentPage((prev) => prev + 1);
               }}

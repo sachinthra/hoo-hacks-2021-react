@@ -7,8 +7,8 @@ import { ThemeContext } from "ThemeContext/ThemeContext";
 
 // core components
 
-function IndexHeader({ inputText, handleOnChange, handleOnSubmit }) {
-  const { Themes, ToggleTheme, isLightTheme } = useContext(ThemeContext);
+function IndexHeader({ inputText, handleOnChange, handleOnSubmit, errorMsg }) {
+  const { Themes } = useContext(ThemeContext);
   function scrollToComment() {
     window.scrollTo({
       top: 100,
@@ -28,6 +28,17 @@ function IndexHeader({ inputText, handleOnChange, handleOnSubmit }) {
         {/* <div className="filter" /> */}
         <div className="content-center" style={{ width: "90%" }}>
           <Container>
+            <Row>
+              <Col sm="12">
+                <div className="title-brand">
+                  <h1 className="presentation-title">Spam Slayer</h1>
+                </div>
+              </Col>
+            </Row>
+            <br />
+            <br />
+            <br />
+            <br />
             <Row>
               <Col sm="9">
                 <FormGroup>
@@ -57,12 +68,17 @@ function IndexHeader({ inputText, handleOnChange, handleOnSubmit }) {
                 </Button>
               </Col>
             </Row>
-            {/* <div className="title-brand">
-              <h1 className="presentation-title">Paper Kit React</h1>
-            </div> */}
-            {/* <h2 className="presentation-subtitle text-center">
-              Make your mark with a Free Bootstrap 4 (Reactstrap) UI Kit!
-            </h2> */}
+
+            {errorMsg !== "" ? (
+              <h2
+                className="presentation-subtitle text-center"
+                style={{ color: "red", fontWeight: "bold" }}
+              >
+                {errorMsg}
+              </h2>
+            ) : (
+              ""
+            )}
           </Container>
         </div>
 
@@ -72,7 +88,7 @@ function IndexHeader({ inputText, handleOnChange, handleOnSubmit }) {
             color: Themes.UiTextTheme,
           }}
         >
-          Designed and coded by
+          This might take Sometime. Please Wait
         </h6>
       </div>
     </>
